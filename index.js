@@ -25,9 +25,15 @@ app.get('/', (req, res) => {
 });
 
 app.get('/bmkg', (req, res) => {
-  const {date} = req.query;
+  const {sdate, edate, city} = req.query;
+  // format from YYYY-MM-DD date to utc
+  const start_date = new Date(sdate).toISOString();
+  const end_date = new Date(edate).toISOString();
+  console.log(start_date, end_date);
   try{
-    db.select('*').from('bmkg').where('id', 'like', `%${date}%`).then(data => {
+    db.select('*').from('bmkg').whereBetween(
+      'jamcuaca', [start_date, end_date]
+    ).andWhere('kota', city).then(data => {
       res.json(data);
     });
   }
@@ -37,9 +43,16 @@ app.get('/bmkg', (req, res) => {
 });
 
 app.get('/iqair', (req, res) => {
-  const {date} = req.query;
+  const {sdate, edate, city} = req.query;
+  // format from YYYY-MM-DD date to utc
+  const start_date = new Date(sdate).toISOString();
+  const end_date = new Date(edate).toISOString();
+  console.log(start_date, end_date, city);
+  if(!city){
+    return res.send("Please specify city");
+  }
   try{
-    db.select('*').from('iqair').where('id', 'like', `%${date}%`).then(data => {
+    db.select('*').from('iqair').whereBetween('accessed', [start_date, end_date]).andWhere('kota', city).then(data => {
       res.json(data);
     });
   }
@@ -47,6 +60,23 @@ app.get('/iqair', (req, res) => {
     console.log(err);
   }
 });
+
+app.get('/join', (req, res) => {
+  const {sdate, edate, city} = req.query;
+  // format from YYYY-MM-DD date to utc
+  const start_date = new Date(sdate).toISOString();
+  const end_date = new Date(edate).toISOString();
+  console.log(start_date, end_date);
+
+  try{
+    db.select('*').from('join_table').whereBetween('jamcuaca', [start_date, end_date]).andWhere('kota', city).then(data => {
+      res.json(data);
+    });
+  }
+  catch(err){
+    console.log(err);
+  }
+})
 
 app.listen(port, () => {
   console.log(`Backend listening at http://localhost:${port}`);
