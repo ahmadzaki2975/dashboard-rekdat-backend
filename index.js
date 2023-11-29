@@ -9,6 +9,11 @@ dotenv.config();
 const morgan = require('morgan');
 app.use(morgan('dev'));
 
+const cors = require('cors');
+app.use(cors({
+  origin: '*'
+}));
+
 const db = knex({
   client: 'pg',
   connection: {
