@@ -6,6 +6,9 @@ const knex = require('knex');
 const dotenv = require('dotenv');
 dotenv.config();
 
+const morgan = require('morgan');
+app.use(morgan('dev'));
+
 const db = knex({
   client: 'pg',
   connection: {
@@ -22,8 +25,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/bmkg', (req, res) => {
+  const {date} = req.query;
   try{
-    db.select('*').from('bmkg').then(data => {
+    db.select('*').from('bmkg').where('id', 'like', `%${date}%`).then(data => {
+      res.json(data);
+    });
+  }
+  catch(err){
+    console.log(err);
+  }
+});
+
+app.get('/iqair', (req, res) => {
+  const {date} = req.query;
+  try{
+    db.select('*').from('iqair').where('id', 'like', `%${date}%`).then(data => {
       res.json(data);
     });
   }
