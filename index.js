@@ -31,6 +31,12 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+// Error catcher
+db.on('error', (err) => {
+  console.error('Unexpected error on idle db client', err);
+  process.exit(-1);
+});
+
 // app.get("/bmkg", (req, res) => {
 //   const { sdate, edate, city } = req.query;
 //   // format from YYYY-MM-DD date to utc
@@ -104,6 +110,10 @@ app.get("/join", (req, res) => {
       .andWhere("kota", city)
       .then((data) => {
         res.json(data);
+      })
+      .catch((err) => {
+        console.log(err);
+        return res.status(500).send("Internal server error");
       });
   } catch (err) {
     console.log(err);
