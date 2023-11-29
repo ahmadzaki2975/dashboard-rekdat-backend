@@ -1,10 +1,10 @@
+
 {
   "version": 2,
   "builds": [
     {
-      "src": "package.json",
-      "use": "@now/node",
-      "config": { "nodeVersion": "18.x" }
+      "src": "index.js",
+      "use": "@now/node"
     }
   ],
   "routes": [
