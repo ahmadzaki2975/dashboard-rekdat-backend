@@ -1,0 +1,28 @@
+{
+  "name": "dashboard-rekdat-backend",
+  "version": "1.0.0",
+  "description": "backend for etl pipeline dashboard",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ahmadzaki2975/dashboard-rekdat-backend.git"
+  },
+  "author": "ahmadzaki2975",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahmadzaki2975/dashboard-rekdat-backend/issues"
+  },
+  "homepage": "https://github.com/ahmadzaki2975/dashboard-rekdat-backend#readme",
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "knex": "^3.0.1",
+    "morgan": "^1.10.0",
+    "pg": "^8.11.3"
+  }
+}
